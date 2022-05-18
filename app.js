@@ -74,6 +74,5 @@ app.use('/', admin_page);
 const myprofile = require("./routes/myprofile");
 app.use('/myprofile', myprofile)
 
-app.listen(5000, () => {
-    console.log("The website is running! Listening port http://localhost:5000.");
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, (err) => console.log("Listening on port 3000 http://localhost:3000"));
