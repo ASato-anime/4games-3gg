@@ -35,7 +35,7 @@ app.use(
 
 app.use(express.json());
 app.use(bodyParser.json());
-// cors
+// corsasd
 app.use(cors());
 app.use(express.static('public'));
 app.use(
