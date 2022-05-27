@@ -35,6 +35,15 @@
             <p class="Login_Welcome">Please enter your name first.<br>Won't be shared publicly.<br>Won't be spammed.</p>
             <div class="need" id="form-div">
                 <form method="post" id="form1" class="form">
+                    <% ErrorsArr.forEach(error=>{ %>
+                    <div class="alert alert-danger" role="alert">
+                        <%=error.msg%>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <% }) %>
                     <label>
                         <input name="name" type="text" required="required" placeholder="Your name" class="names" id="name">
                         <br>
@@ -58,10 +67,9 @@
                     <button type="submit" formmethod="post" value="Create" id="btn_for_login" class="button_send" onclick=CheckPassword()> Create </button>
                 </form>
 
-                <a href="/login" class="button_send"> . Login </a>
+                <a href="/login" class="button_send"> Log  in </a>
             </div>
             <br>
-            <a class="h_1" href="static/index.html" class="Login_back">Back to Main page</a>
         </div>
     </div>
 
@@ -101,8 +109,11 @@
                     email: userEmail,
                     city: userCity,
                     password: userPassword,
+                    SnakeScores: 0,
+                    SriScores: 0,
+                    png_src: "https://cdn.fishki.net/upload/post/201409/28/1309069/18_image.jpg",
                 })
-
+            
                 const http = new XMLHttpRequest();
                 http.open("POST", "/signup");
 
@@ -110,11 +121,17 @@
                 http.setRequestHeader("Content-type", "application/json");
                 http.send(user);
                 http.onload = function() {
-                    alert("Registration is successful");
+                    if(http.status !== 400){
+                        console.log(http.status)
+                        alert("Registration is successful");
+                        window.location.replace("/login");
+                    }else {
+                        alert("User is already exists.");
+                    }
                 };
                 return true;
             } else {
-                alert("Failed registration");
+                alert("Failed registration, password shoul have lenght more than 8, have BIG and small letter, special symbols and numbers");
                 return false;
             }
         }
